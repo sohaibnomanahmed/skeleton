@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test/provider/detail_provider.dart';
+import 'package:test/core/detail_provider.dart';
 
 class DetailPage extends StatefulWidget {
   final String name;

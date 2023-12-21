@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:test/provider/home_provider.dart';
 
-import 'pages/home_page.dart';
+import 'routing/routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  final routes = Routes();
+
+  runApp(MyApp(routes: routes));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Routes routes;
+  const MyApp({super.key, required this.routes});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: ChangeNotifierProvider(
-          create: (_) => HomeProvider(),
-          child: const HomePage(),
-        ));
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      routerConfig: routes.router,
+    );
   }
 }
-
-// TODO creae service

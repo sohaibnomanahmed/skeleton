@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:test/models/org_detail.dart';
+import 'package:test/core/models/org_detail.dart';
 
-import 'package:test/models/org_item.dart';
+import 'package:test/core/models/org_item.dart';
 
 class BrregService {
   Future<List<OrgItem>?> getOrgsFromPage(String name, int page) async {
     var url = Uri.parse(
         'https://data.brreg.no/enhetsregisteret/api/enheter?navn=$name&page=$page');
     var response = await http.get(url).timeout(const Duration(seconds: 5));
-    final parsed = jsonDecode(response.body);
+    final parsed = jsonDecode(utf8.decode(response.bodyBytes));
 
     if (parsed['_embedded'] == null) {
       return null;
@@ -24,7 +24,7 @@ class BrregService {
     var url =
         Uri.parse('https://data.brreg.no/enhetsregisteret/api/enheter/$orgNum');
     var response = await http.get(url).timeout(const Duration(seconds: 5));
-    final parsed = jsonDecode(response.body);
+    final parsed = jsonDecode(utf8.decode(response.bodyBytes));
     if (parsed == null) {
       return null;
     }

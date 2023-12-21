@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:test/pages/detail_page.dart';
-import 'package:test/provider/detail_provider.dart';
 
-import '../provider/home_provider.dart';
+import 'home_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,6 +24,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
             title: TextField(
           onChanged: (val) => name = val,
+          onSubmitted: (_) => context.read<HomeProvider>().searchByName(name),
           decoration: InputDecoration(
               hintText: 'Search for organizations',
               suffixIcon: IconButton(
@@ -62,17 +62,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                               title: Text(orgs[index].name),
                               subtitle: Text(orgs[index].address),
-                              onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          ChangeNotifierProvider(
-                                              create: (context) =>
-                                                  DetailsProvider(),
-                                              child: DetailPage(
-                                                orgNum: orgs[index].id,
-                                                name: orgs[index].name,
-                                              ))))),
+                              onTap: () => context.pushNamed('detail', extra: {
+                                'orgNum': orgs[index].id,
+                                'name': orgs[index].name
+                              }),
                             )),
                   ));
   }
