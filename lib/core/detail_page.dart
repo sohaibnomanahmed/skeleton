@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:test/core/detail_provider.dart';
 
 class DetailPage extends StatefulWidget {
+  static const routeName = 'detail';
+
   final String name;
   final String orgNum;
   const DetailPage({super.key, required this.orgNum, required this.name});
