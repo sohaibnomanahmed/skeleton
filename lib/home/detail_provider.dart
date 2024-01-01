@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:test/core/models/org_detail.dart';
-import 'package:test/core/brreg_service.dart';
+import 'package:test/home/models/org_detail.dart';
+import 'package:test/home/brreg_service.dart';
 
 class DetailsProvider with ChangeNotifier {
   OrgDetail? _orgDetail;

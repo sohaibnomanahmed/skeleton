@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:test/core/models/org_detail.dart';
+import 'package:test/home/models/org_detail.dart';
 
-import 'package:test/core/models/org_item.dart';
+import 'package:test/home/models/org_item.dart';
 
 class BrregService {
   Future<List<OrgItem>?> getOrgsFromPage(String name, int page) async {
