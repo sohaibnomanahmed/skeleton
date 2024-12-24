@@ -1,9 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:test/home/detail_provider.dart';
-import 'package:test/home/home_provider.dart';
 import 'package:test/settings/settings_page.dart';
-import 'package:test/settings/settings_provider.dart';
 import 'package:test/tab_page_2.dart';
 
 import '../home/detail_page.dart';
@@ -22,18 +18,12 @@ class Routes {
             GoRoute(
               name: HomePage.routeName,
               path: '/',
-              builder: (context, state) => ChangeNotifierProvider(
-                create: (_) => HomeProvider(),
-                child: const HomePage(),
-              ),
+              builder: (context, state) => const HomePage(),
             ),
             GoRoute(
               name: SettingsPage.routeName,
               path: '/settings',
-              builder: (context, state) => ChangeNotifierProvider(
-                create: (_) => SettingsProvider(),
-                child: const SettingsPage(),
-              ),
+              builder: (context, state) => const SettingsPage(),
             ),
           ],
         ),
@@ -45,10 +35,7 @@ class Routes {
               throw Exception();
             }
             final param = state.extra as Map<String, dynamic>;
-            return ChangeNotifierProvider(
-              create: (_) => DetailsProvider(),
-              child: DetailPage(orgNum: param['orgNum'], name: param['name']),
-            );
+            return DetailPage(orgNum: param['orgNum'], name: param['name']);
           },
         ),
       ],

@@ -1,39 +1,35 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test/home/models/org_item.dart';
 import 'package:test/home/brreg_service.dart';
 
-class HomeProvider with ChangeNotifier {
-  List<OrgItem> _orgs = [];
-  var _isLoading = false;
-  var _page = 0;
+class HomeProvider extends GetxController {
+  final RxList<OrgItem> _orgs = <OrgItem>[].obs;
+  final _isLoading = false.obs;
+  var _page = 0.obs;
 
-  bool get isLoading => _isLoading;
-  List<OrgItem> get orgs => _orgs;
+  RxBool get isLoading => _isLoading;
+  RxList<OrgItem> get orgs => _orgs;
 
   void searchByName(String name) async {
-    _isLoading = true;
-    _page = 0;
-    notifyListeners();
+    _isLoading.value = true;
+    _page.value = 0;
 
     try {
-      final orgs = await BrregService().getOrgsFromPage(name, _page);
+      final orgs = await BrregService().getOrgsFromPage(name, _page.value);
       if (orgs == null) {
-        _isLoading = false;
-        _orgs = [];
-        notifyListeners();
+        _isLoading.value = false;
+        _orgs.value = [];
         return;
       }
-      _orgs = orgs;
-      _isLoading = false;
-      notifyListeners();
+      _orgs.value = orgs;
+      _isLoading.value = false;
     } on TimeoutException catch (_) {
       
     } catch (error) {
       //print('Failed to fetch more orgs: $error');
-      _isLoading = false;
-      notifyListeners();
+      _isLoading.value = false;
       return;
     }
   }
@@ -42,18 +38,15 @@ class HomeProvider with ChangeNotifier {
     _page += 1;
 
     try {
-      final orgs = await BrregService().getOrgsFromPage(name, _page);
+      final orgs = await BrregService().getOrgsFromPage(name, _page.value);
       if (orgs == null) {
-        notifyListeners();
         return;
       }
       _orgs.addAll(orgs);
-      notifyListeners();
     } on TimeoutException catch (_) {
       
     } catch (error) {
       //print('Failed to fetch more orgs: $error');
-      notifyListeners();
       return;
     }
   }
