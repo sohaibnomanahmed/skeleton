@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    lock = false;
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -38,7 +37,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Obx(() => controller.isLoading.value
+      body: Obx(() {
+        lock = false;
+        return controller.isLoading.value
           ? const Center(
         child: CircularProgressIndicator(),
       )
@@ -75,7 +76,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-      ),),
+      );
+      },),
     );
   }
 }
